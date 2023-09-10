@@ -11,6 +11,6 @@
 - Ndako Adama Muhammed [@NdakoAdama](https://github.com/NdakoAdama)
 ## Technologies used
 
-## Installation
+## Installations and Use
 
 ## How to contribute to this project
