@@ -4,4 +4,13 @@
   Users(teachers, students and parents) have access to the platform and can access the results of their student(s).
   Teachers upload scores from exams and contionous assessments to students profile.
   Students and parents have access to their results through the portal and/or get the result in through email.
+## Contributors
+- Ajeigbe Paul @ajeigbepaul
+- Ezugwu Harrison @Oneharry
+- Odeme Tochukwu @Teek-tech
+- Ndako Adama Muhammed @NdakoAdama
+## Technologies used
 
+## Installation
+
+## How to contribute to this project
