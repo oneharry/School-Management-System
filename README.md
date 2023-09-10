@@ -1,4 +1,4 @@
-# School-Management-System
+# School Management System
 ## Description
   The school management system is a platform allowing schools to manage results for students.
   Users(teachers, students and parents) have access to the platform and can access the results of their student(s).
