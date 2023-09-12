@@ -2,7 +2,11 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className='w-full'>
+      <span className='w-full flex items-center justify-center text-sm'>
+        Project by Team members @ALX 2023
+      </span>
+    </div>
   )
 }
 
