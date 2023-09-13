@@ -14,7 +14,7 @@ function Sms() {
       <section className="w-full h-screen bg-gray-500 bgImage flex items-center justify-center relative">
         {activepage === "home" && (
           <div className="flex flex-col lg:w-2/4 w-3/4 items-center space-y-2">
-            <div className="lg:text-5xl text-xl text-white font-bold bg-black/40 px-2 py-2 ">
+            <div className="lg:text-4xl text-xl text-white font-bold bg-black/40 px-2 py-2 ">
               School Management Portal
             </div>
             <button className="w-[70%] bg-gray-700 px-2 py-2 rounded-full text-white font-semibold hover:text-orange-300 duration-100 transition all ease-in">
