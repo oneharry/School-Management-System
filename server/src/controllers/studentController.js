@@ -45,15 +45,19 @@ const createStudent = asyncHandler(async (req, res) => {
  * @return student object as response object
  */
 const getStudentProfile = async (req, res) => {
-  console.log("The request body is :", req.body);
+  console.log("The request body is :", req.params.id);
   const { id } = req.params;
-  Student.findById(id, (err, student) => {
-    if (err) {
-      errorHandler(err);
-    } else if(student) {
+  try {
+    const student = await Student.findOne({id});
+    if (student) {
       res.status(200).json(student);
+    } else {
+      res.status(404).json({"err": `student with id ${id} not found`});
     }
-  })
+  } catch (error) {
+    throw new Error('Error finding student');
+  }
+
 };
 
 /**
@@ -65,13 +69,17 @@ const updateStudent = async (req, res) => {
   console.log("The request body is :", req.body);
   const { id } = req.params;
   const updatedData = req.body;
-  Student.findByIdAndUpdate(id, updatedData, (err, updatedStudent) => {
-    if (err) {
-      errorHandler(err);
-    } else if(updatedStudent) {
-      res.status(200).json(updateStudent);
+  try {
+    const student = await Student.findOneAndUpdate({id}, updatedData, {new: true});
+    if (student) {
+      res.status(201).json(student);
+    } else {
+      res.status(404).json({"err": `student with id ${id} not found`});
+
     }
-  })
+  } catch (error) {
+    throw new Error('Error updating student');
+  }
 };
 
 /**
@@ -82,14 +90,44 @@ const updateStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
   console.log("The request body is :", req.body);
   const { id } = req.params;
-  Student.findByIdAndDelete(id, (err, student) => {
-    if (err) {
-      errorHandler(err);
-    } else if(student) {
-      res.status(200).json(updateStudent);
+  try {
+    const student = await Student.findOneAndDelete({id});
+    if (student) {
+      res.status(200).json(student);
+    } else {
+      res.status(404).json({"err": `student with id ${id} not found`});
     }
-  })
+  } catch (error) {
+    throw new Error('Error deleting student');
+  }
+
 };
+
+
+
+/**
+ * @desc add scores for a student
+ * @route  /api/student/:id/score
+ * @return student object as response object
+ */
+const addScore = async (req, res) => {
+  const { id } = req.params;
+  const { grade, course, assesment, exam} = req.body;
+  try {
+    const student = await Student.findOne({id});
+    if (student) {
+      const { courses } = student;
+
+      
+      res.status(201).json(student);
+    } else {
+      res.status(404).json({"err": `student with id ${id} not found`});
+
+    }
+  } catch (error) {
+    throw new Error('Error scoring student');
+  }
+}
 
 module.exports = {
     getStudent,
