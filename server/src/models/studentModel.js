@@ -22,8 +22,8 @@ const studentSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please add the student ID"],
     },
-    level: {
-      type: String,
+    grade: {
+      type: Number,
       required: [true, "Please add the student class"],
     },
     parent: {
