@@ -112,11 +112,10 @@ const deleteStudent = async (req, res) => {
  */
 const addScore = async (req, res) => {
   const { id } = req.params;
-  const { grade, course, assesment, exam} = req.body;
+  const { grade, subject, assesment, exam} = req.body;
   try {
     const student = await Student.findOne({id});
     if (student) {
-      const { courses } = student;
 
       
       res.status(201).json(student);
@@ -125,7 +124,7 @@ const addScore = async (req, res) => {
 
     }
   } catch (error) {
-    throw new Error('Error scoring student');
+    throw new Error('error scoring student');
   }
 }
 
