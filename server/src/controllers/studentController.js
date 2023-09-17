@@ -16,13 +16,13 @@ const getStudent = asyncHandler(async (req, res) => {
 //@access public
 const createStudent = asyncHandler(async (req, res) => {
   console.log("The request body is :", req.body);
-  const { name, email, phone, date, grade, parent } = req.body;
-  if (!name || !email || !phone || !date || !grade || !parent ) {
+  const { name, email, phone, date, grade, parent, id } = req.body;
+  if (!name || !email || !phone || !date || !grade || !parent || !id ) {
     res.status(400);
     throw new Error("All fields are mandatory !");
   }
 
-  const id = 1 //to be auto generated
+
   const contact = await Student.create({
     name,
     date,
@@ -45,7 +45,6 @@ const createStudent = asyncHandler(async (req, res) => {
  * @return student object as response object
  */
 const getStudentProfile = async (req, res) => {
-  console.log("The request body is :", req.params.id);
   const { id } = req.params;
   try {
     const student = await Student.findOne({id});
@@ -105,26 +104,31 @@ const deleteStudent = async (req, res) => {
 
 
 
+
 /**
  * @desc add scores for a student
- * @route  /api/student/:id/score
+ * @route  /api/student/:grade/:id
  * @return student object as response object
  */
 const addScore = async (req, res) => {
-  const { id } = req.params;
-  const { grade, subject, assesment, exam} = req.body;
+  const { id, grade } = req.params;
+  const result = req.body;
+
   try {
-    const student = await Student.findOne({id});
-    if (student) {
 
-      
-      res.status(201).json(student);
-    } else {
-      res.status(404).json({"err": `student with id ${id} not found`});
-
+    for (const course in result) {
+      const student = await Student.findOneAndUpdate({ id },
+        { $set: { [`courses.0.${grade}.${course}`]: result[course] } },
+        { new: true }
+      );
+      if (!student) {
+        return res.status(404).json({ error: `Student with id ${id} not found` });
+      }
     }
+    res.status(201).json({msg: "Result added successfully"});
   } catch (error) {
-    throw new Error('error scoring student');
+    console.log(error);
+    res.status(500).json({ error: 'error scoring student' });
   }
 }
 
@@ -133,5 +137,6 @@ module.exports = {
     createStudent,
     getStudentProfile,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    addScore
 };

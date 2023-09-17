@@ -30,7 +30,32 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the student's parent name"],
     },
-    courses: [],
+    courses: [{
+      "1": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      },
+      "2": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      },
+      "3": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      },
+      "4": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      },
+      "5": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      },
+      "6": {type: mongoose.Schema.Types.Mixed,
+        default: {},
+        required: false
+      }
+    }]
   },
   {
     timestamps: true,
