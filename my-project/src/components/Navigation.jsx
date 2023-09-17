@@ -21,7 +21,7 @@ function Navigation({handleActive, active}) {
           <div className="text-2xl font-bold">Dashboard</div>
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-600">Welcome,</span>
-            <span className="text-xs font-bold">Adama</span>
+            <span className="text-xs font-mono">Adama</span>
           </div>
         </div>
         <div className="flex flex-col space-y-3">

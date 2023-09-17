@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
   display: flex;
@@ -6,7 +6,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-}
+} */
 
 .container {
   background-color: #fff;
@@ -51,7 +51,7 @@ input[type="password"] {
 }
 
 button[type="submit"] {
-  background-color: #4D44B5;
+  background-color: orange;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -71,6 +71,6 @@ p{
     font-weight: bold;
     margin-left: 100px;
 }
-p .sign-up{
+/* p .sign-up{
     color: #4D44B5;
-}
+} */

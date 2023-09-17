@@ -40,7 +40,7 @@ input[type="password"] {
 }
 
 button[type="submit"] {
-  background-color: #4D44B5;
+  background-color: orange;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -55,6 +55,6 @@ button[type="submit"]:hover {
   background-color: #0a0729;
 }
 
-p .sign-In{
+/* p .sign-In{
     color: #4D44B5;
-}
+} */
