@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Header({handlePages, activepage}) {
-  let auth = true;
+  let auth = false;
   
   return (
     <div className="w-full lg:h-[10vh] h-[20vh] mb-5 lg:mb-0">
@@ -56,7 +56,7 @@ function Header({handlePages, activepage}) {
               Logout
             </button>
           ) : (
-            <Link to="">Login/Register</Link>
+            <Link to="/login">Login/Register</Link>
           )}
         </div>
       </div>
