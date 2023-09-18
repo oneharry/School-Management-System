@@ -18,8 +18,7 @@ const createStudent = asyncHandler(async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone, date, grade, parent, id } = req.body;
   if (!name || !email || !phone || !date || !grade || !parent || !id ) {
-    res.status(400);
-    throw new Error("All fields are mandatory !");
+    res.status(400).json({"err": "All fields are mandatory !"});
   }
 
 
@@ -54,7 +53,8 @@ const getStudentProfile = async (req, res) => {
       res.status(404).json({"err": `student with id ${id} not found`});
     }
   } catch (error) {
-    throw new Error('Error finding student');
+    console.log(error);
+    res.status(500).json({ error: 'error finding student' });
   }
 
 };
@@ -77,7 +77,8 @@ const updateStudent = async (req, res) => {
 
     }
   } catch (error) {
-    throw new Error('Error updating student');
+    console.log(error);
+    res.status(500).json({ error: 'error updating student' });
   }
 };
 
@@ -97,7 +98,8 @@ const deleteStudent = async (req, res) => {
       res.status(404).json({"err": `student with id ${id} not found`});
     }
   } catch (error) {
-    throw new Error('Error deleting student');
+    console.log(error);
+    res.status(500).json({ error: 'error deleting student' });
   }
 
 };
