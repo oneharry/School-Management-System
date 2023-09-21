@@ -6,6 +6,7 @@ const { getParent, createParent } = require("../controllers/parentController");
 
 
 
+
 router.get('/student/:id', getStudentProfile);
 router.get('/students', getStudent);
 router.post('/student', createStudent);

@@ -43,6 +43,8 @@ const createStudent = asyncHandler(async (req, res) => {
  * @route GET /api/student/:id
  * @return student object as response object
  */
+
+
 const getStudentProfile = async (req, res) => {
   const { id } = req.params;
   try {
