@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Student = require("../models/studentModel");
+const User = require('../models/userModel')
 const errorHandler = require('../middleware/errorHandler');
 
 
@@ -21,6 +22,11 @@ const createStudent = asyncHandler(async (req, res) => {
     res.status(400).json({"err": "All fields are mandatory !"});
   }
 
+  const userExist = await User.findOne({ email });
+
+  if (!userExist) {
+    res.status(400).json({ "err": `${email} is not registered`});
+  }
 
   const contact = await Student.create({
     name,
@@ -67,7 +73,6 @@ const getStudentProfile = async (req, res) => {
  * @return student object as response object
  */
 const updateStudent = async (req, res) => {
-  console.log("The request body is :", req.body);
   const { id } = req.params;
   const updatedData = req.body;
   try {
