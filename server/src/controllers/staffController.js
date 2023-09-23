@@ -19,7 +19,8 @@ const createStaff = async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone, id, specialty } = req.body;
   if (!name || !email || !phone || !specialty || !id) {
-    res.status(400).json({"err": "All fields are mandatory !"});
+    res.status(400);
+    throw new Error("All fields are mandatory !");
   }
 
   const staff = await Staff.create({
