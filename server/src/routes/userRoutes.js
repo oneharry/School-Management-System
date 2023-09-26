@@ -3,6 +3,7 @@ const {
   registerUser,
   currentUser,
   loginUser,
+  logoutUser,
 } = require("../controllers/userController");
 const validateToken = require("../middleware/validateTokenHandler");
 
