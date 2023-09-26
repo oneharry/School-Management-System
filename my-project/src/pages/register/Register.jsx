@@ -1,24 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../components/Footer";
 import "./Register.css";
+import axios from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      const res = axios.post("/api/users/register", {
+        username,
+        email,
+        password,
+      });
+      console.log(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="w-full flex items-center bg-gray-100 flex-col h-screen">
-      <div className="w-1/4 bg-white rounded-lg p-4 flex flex-col mt-10">
+      <div className="lg:w-1/4 w-full bg-white rounded-lg p-4 flex flex-col mt-10">
         <h2 className="reg">Register</h2>
-        <form>
-          <div className="">
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="w-full">
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" placeholder="Enter Username" />
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
-          <div className="">
+          <div className="w-full">
             <label htmlFor="email">Email address</label>
-            <input type="text" id="email" placeholder="Email" />
+            <input
+              type="text"
+              id="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-          <div className="">
+          <div className="w-full">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="Enter Password" />
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <button type="submit">Sign me up</button>
         </form>

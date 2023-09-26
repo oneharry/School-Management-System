@@ -1,6 +1,19 @@
 import React from "react";
 import "./Login.css";
+import axios from "../../api/axios"
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 function Login() {
+
+  const handleSubmit = (e)=>{
+  e.preventDefault();
+  try {
+    const res = axios.post("/api/users/login", {});
+    console.log(res.data)
+  } catch (error) {
+    console.log(error)
+  }
+  }
   return (
     <div className="w-full flex items-center bg-gray-100 flex-col h-screen">
       <div className="w-1/4 bg-white rounded-lg p-4 flex flex-col mt-10">
