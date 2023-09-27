@@ -7,7 +7,7 @@ const Staff = require("../models/staffModel");
  */
 const getStaff = async (req, res) => {
   const staff = await Staff.find();
-  res.status(200).json(staff);
+  res.status(200).json({"data": staff});
 };
 
 /**
@@ -18,18 +18,24 @@ const getStaff = async (req, res) => {
 const createStaff = async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone, id, specialty } = req.body;
-  if (!name || !email || !phone || !specialty || !id) {
-    return res.status(400).json({"status": "failure", "msg": "All fields are mandatory !"});
+  try {
+    if (!name || !email || !phone || !specialty || !id) {
+      res.status(400);
+      throw new Error("All fields are mandatory !");
+    }
+  
+    const staff = await Staff.create({
+      name,
+      email,
+      phone,
+      specialty,
+      id,
+    });
+    res.status(201).json({"data": staff});
+  } catch (error) {
+    console.log(error);
+    res.json(error.message);
   }
-
-  const staff = await Staff.create({
-    name,
-    email,
-    phone,
-    specialty,
-    id,
-  });
-  res.status(201).json(staff);
 };
 
 

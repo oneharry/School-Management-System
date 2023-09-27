@@ -7,7 +7,7 @@ const Parent = require("../models/parentModel");
  */
 const getParent = async (req, res) => {
   const parent = await Parent.find();
-  res.status(200).json(parent);
+  res.status(200).json({"data": parent});
 };
 
 /**
@@ -18,19 +18,24 @@ const getParent = async (req, res) => {
 const createParent = async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone } = req.body;
-  if (!name || !email || !phone) {
-    return res.status(400).json({"status": "failure", "msg": "All fields are mandatory !"});
+  try {
+    if (!name || !email || !phone) {
+      res.status(400);
+      throw new Error("All fields are mandatory !");
+    }
+  
+    const parent = await Parent.create({
+      name,
+      email,
+      phone,
+      id,
+    });
+  
+    res.status(201).json(parent);
+  } catch (error) {
+    console.log(error);
+    res.json(error.message);
   }
-
-  const id = 3 //to be auto generated
-  const parent = await Parent.create({
-    name,
-    email,
-    phone,
-    id,
-  });
-
-  res.status(201).json(parent);
 };
 
 

@@ -8,13 +8,15 @@ const User = require("../models/userModel");
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, designation } = req.body;
- 
+ try {
   if (!username || !email || !password || !designation) {
-    return res.status(400).json({ "message": "All fields are mandatory!"});
+    res.status(400);
+    throw new Error("All fields are mandatory!");
   }
   const userAvailable = await User.findOne({ email });
   if (userAvailable) {
-    return res.status(400).json({ "message": "User already registered!"});
+    res.status(400);
+    throw new Error("User already registered!");
   }
 
   //Hash password
@@ -29,10 +31,15 @@ const registerUser = asyncHandler(async (req, res) => {
 
   console.log(`User created ${user}`);
   if (user) {
-    return res.status(201).json({ _id: user.id, email: user.email });
+    res.status(201).json({ _id: user.id, email: user.email });
   } else {
-    return res.status(400).json({ "message": "User data is not valid"});
+    res.status(400);
+    throw new Error("User data is not valid");
   }
+ } catch (error) {
+  console.log(error);
+  res.send(error);
+ }
 });
 
 //@desc Login user
@@ -40,26 +47,34 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ "messsage":"All fields are mandatory!" });
-  }
-  const user = await User.findOne({ email });
-  //compare password with hashedpassword
-  if (user && (await bcrypt.compare(password, user.password))) {
-    const accessToken = jwt.sign(
-      {
-        user: {
-          username: user.username,
-          email: user.email,
-          id: user.id,
+
+  try {
+    if (!email || !password) {
+      res.status(400);
+      throw new Error("All fields are mandatory!");
+    }
+    const user = await User.findOne({ email });
+    //compare password with hashedpassword
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const accessToken = jwt.sign(
+        {
+          user: {
+            username: user.username,
+            email: user.email,
+            id: user.id,
+          },
         },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30m" }
-    );
-    res.status(201).json({ accessToken, user });
-  } else {
-    return res.status(401).json({ "message": "email or password is not valid"});
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "30m" }
+      );
+      res.status(201).json({"data": { accessToken, user }});
+    } else {
+      res.status(401);
+      throw new Error("email or password is not valid");
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error.message);
   }
 });
 
