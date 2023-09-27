@@ -17,8 +17,7 @@ const writeAccess = async (req, res, next) => {
     if (staff) {
         next();
     } else {
-        res.status(401);
-        throw new Error("You don't have write access");
+        res.status(401).json({"msg": "You don't have write access"});
     }
 }
 
@@ -48,8 +47,7 @@ const readAccess = async (req, res, next) => {
     if (staff || (student && (id == student.id)) || parentChild) {
         next();
     } else {
-        res.status(401);
-        throw new Error("You don't have read access to this resources");
+        res.status(401).json({"msg": "You don't have read access to this resources"});
     }
 }
 

@@ -7,8 +7,7 @@ const isUserExist = async (req, res, next) => {
     if (userExist) {
         next();
     } else {
-        res.status(401);
-        throw new Error(`${email} is not a registered user`);
+        res.status(401).json({"msg": `${email} is not a registered user`});
     }
 }
 

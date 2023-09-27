@@ -19,10 +19,8 @@ const createStudent = asyncHandler(async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone, date, grade, parent, id } = req.body;
   if (!name || !email || !phone || !date || !grade || !parent || !id ) {
-    res.status(400);
-    throw new Error("All fields are mandatory !");
+    return res.status(400).json({"status": "failure", "msg": "All fields are mandatory !"});
   }
-
 
   const contact = await Student.create({
     name,
@@ -55,13 +53,12 @@ const getStudentProfile = async (req, res) => {
       res.status(200).json(student);
     } else {
       res.status(404);
-      throw new Error(`student with id ${id} not found`);
+      return res.status(404).json({"message": `student with id ${id} not found`});
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json(error)
+    return res.status(500).json({"status": "failure", "msg": `error getting`});
   }
-
 };
 
 /**
@@ -77,14 +74,12 @@ const updateStudent = async (req, res) => {
     if (student) {
       res.status(201).json(student);
     } else {
-      res.status(404);
-      throw new Error(`student with id ${id} not found`);
+      return res.status(404).json({"status": "failure", "msg": `student with id ${id} not found`});
 
     }
   } catch (error) {
     console.log(error);
-    res.status(500);
-    throw new Error('error updating student');
+    return res.status(500).json({"status": "failure", "msg": 'error updating student'});
   }
 };
 
@@ -101,17 +96,13 @@ const deleteStudent = async (req, res) => {
     if (student) {
       res.status(200).json(student);
     } else {
-      res.status(404);
-      throw new Error(`student with id ${id} not found`);
+      return res.status(404).json({"status": "failure", "msg": `student with id ${id} not found`});
     }
   } catch (error) {
     console.log(error);
-    res.status(500);
-    throw new Error('error deleting student');
+    return res.status(500).json({"status": "failure", "msg": 'error deleting student'});
   }
 };
-
-
 
 
 /**
@@ -131,14 +122,12 @@ const addScore = async (req, res) => {
         { new: true }
       );
       if (!student) {
-        res.status(404);
-        throw new Error(`Student with id ${id} not found` );
+        return res.status(404).json({"status": "failure", "msg": `student with id ${id} not found`});
       }
     }
-    res.status(201).json({msg: "Result added successfully"});
+    res.status(201).json({"status": "success", "msg": "Result added successfully"});
   } catch (error) {
-    res.status(500);
-    throw new Error('error scoring student');
+    return res.status(500).json({"status": "failure", "msg": 'error scoring student'});
   }
 }
 
