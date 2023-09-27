@@ -7,9 +7,9 @@ const User = require("../models/userModel");
 //@route POST /api/users/register/
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, designation } = req.body;
  
-  if (!username || !email || !password) {
+  if (!username || !email || !password || !designation) {
     return res.status(400).json({ "message": "All fields are mandatory!"});
   }
   const userAvailable = await User.findOne({ email });
@@ -24,6 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password: hashedPassword,
+    designation
   });
 
   console.log(`User created ${user}`);
@@ -56,7 +57,7 @@ const loginUser = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30m" }
     );
-    res.status(201).json({ accessToken });
+    res.status(201).json({ accessToken, user });
   } else {
     return res.status(401).json({ "message": "email or password is not valid"});
   }
