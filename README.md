@@ -13,4 +13,12 @@
 
 ## Installations and Use
 
+## Test
+### Unit testing: server
+- git pull && cd server
+- install mongodb locally [download here](https://www.mongodb.com/try/download/community)
+- on your command terminal, run ```mongodb``` tostart up mongodb database
+- on a different terminal, run ```npm run test```
+
+
 ## How to contribute to this project
