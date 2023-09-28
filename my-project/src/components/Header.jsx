@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import useAuth from "../hook/useAuth";
 function Header({handlePages, activepage}) {
-  let auth = false;
-  
+  // let auth = false;
+  const {auth} = useAuth()
+  console.log(auth)
   return (
     <div className="w-full lg:h-[10vh] h-[20vh] mb-5 lg:mb-0">
       <div className="lg:w-3/5 w-full mx-auto lg:flex items-center lg:justify-between justify-center py-2 ">
