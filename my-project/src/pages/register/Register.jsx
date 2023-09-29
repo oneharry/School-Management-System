@@ -8,17 +8,21 @@ function Login() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [designation, setDesignation] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    console.log(designation)
     try {
-      const res = axios.post("/api/users/register", {
+      const res = await axios.post("/api/users/register", {
         username,
         email,
         password,
+        designation
       });
-      console.log(res?.data);
+      console.log(res.data)
+      navigate("/login")
     } catch (error) {
       console.log(error);
     }
@@ -57,6 +61,25 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+          </div>
+          <div className="w-full">
+            <label htmlFor="password">Designation</label>
+            <select
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+            >
+              <option>select</option>
+              <option>student</option>
+              <option>teacher</option>
+              <option>admin</option>
+            </select>
+            {/* <input
+              type="password"
+              id="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            /> */}
           </div>
           <button type="submit">Sign me up</button>
         </form>

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hook/useAuth";
-function Header({handlePages, activepage}) {
+function Header({ handlePages, activepage }) {
   // let auth = false;
-  const {auth} = useAuth()
-  console.log(auth)
+  const { auth,setAuth } = useAuth();
+  const navigate = useNavigate()
+  console.log(auth);
+  const handleLogout = ()=>{
+    setAuth({})
+   navigate("/")
+  }
   return (
     <div className="w-full lg:h-[10vh] h-[20vh] mb-5 lg:mb-0">
       <div className="lg:w-3/5 w-full mx-auto lg:flex items-center lg:justify-between justify-center py-2 ">
@@ -52,10 +57,15 @@ function Header({handlePages, activepage}) {
           </div>
         </div>
         <div className="flex items-center justify-center">
-          {auth ? (
-            <button className="px-2 py-1 rounded-md bg-orange-300 text-xs text-white font-semibold">
-              Logout
-            </button>
+          {auth.designation ? (
+            <>
+              <div className="flex items-center space-x-1">
+                <h2 className="text-xs">{auth?.designation}</h2>
+                <button className="px-2 py-1 rounded-md bg-orange-300 text-xs text-white font-semibold" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </>
           ) : (
             <Link to="/login">Login/Register</Link>
           )}

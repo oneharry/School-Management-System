@@ -10,20 +10,33 @@ function Login() {
    const [password, setPassword] = useState("");
    const [error, setError] = useState("");
    const { setAuth } = useAuth();
-  const handleSubmit = (e)=>{
-  e.preventDefault();
-  try {
-    const res = axios.post("/api/users/login", { email, password });
-    console.log(res?.data)
-    const accessToken = res?.data?.accessToken;
-    const useremail = res?.data?.email;
-    const id = res?.data?._id;
-    setAuth({accessToken,useremail,id})
-    navigate("/")
-  } catch (error) {
-    console.log(error)
-  }
-  }
+ const handleSubmit = (e) => {
+   e.preventDefault();
+ 
+   try {
+     axios
+       .post("/api/users/login", { email, password })
+       .then((response) => {
+         // Access the data from the response once the Promise is fulfilled
+         const data = response.data;
+         console.log(data.data);
+         // Now you can access specific properties from the data object
+          const accessToken = data?.data?.accessToken;
+          const useremail = data?.data?.user?.email;
+          const id = data?.data?.user?._id;
+          const designation = data?.data?.user?.designation;
+          setAuth({ accessToken, useremail, id, designation });
+
+         navigate("/admin");
+       })
+       .catch((error) => {
+         console.error(error);
+       });
+   } catch (error) {
+     console.error(error);
+   }
+ };
+
   return (
     <div className="w-full flex items-center bg-gray-100 flex-col h-screen">
       <div className="lg:w-1/4 w-full bg-white rounded-lg p-4 flex flex-col mt-10">
