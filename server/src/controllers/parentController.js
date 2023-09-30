@@ -1,4 +1,7 @@
 const Parent = require("../models/parentModel");
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
+
 
 /**
  * @desc Get all parents
@@ -17,11 +20,19 @@ const getParent = async (req, res) => {
  */
 const createParent = async (req, res) => {
   console.log("The request body is :", req.body);
+
+  const designation = "parent";
   const { name, email, phone } = req.body;
   try {
     if (!name || !email || !phone) {
       res.status(400);
       throw new Error("All fields are mandatory !");
+    }
+
+    const userAvailable = await User.findOne({ email });
+    if (userAvailable) {
+      res.status(400);
+      throw new Error("User already registered!");
     }
   
     const parent = await Parent.create({
@@ -30,6 +41,16 @@ const createParent = async (req, res) => {
       phone,
       id,
     });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username: name,
+      email,
+      password: hashedPassword,
+      designation
+    });
+
+    console.log(`User created ${user}`);
   
     res.status(201).json(parent);
   } catch (error) {

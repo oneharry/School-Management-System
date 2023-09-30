@@ -19,11 +19,11 @@ const studentSchema = mongoose.Schema(
       required: [true, "Please add the student phone number"],
     },
     id: {
-      type: Number,
+      type: String,
       required: [true, "Please add the student ID"],
     },
     grade: {
-      type: Number,
+      type: String,
       required: [true, "Please add the student class"],
     },
     parent: {

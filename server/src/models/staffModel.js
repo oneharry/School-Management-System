@@ -19,7 +19,7 @@ const staffSchema = mongoose.Schema(
         required: [true, "Please add the staff specialty"],
     },
     id: {
-        type: Number,
+        type: String,
         required: [true, "Please add the staff ID"],
     },
   },

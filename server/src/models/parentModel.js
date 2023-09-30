@@ -15,7 +15,7 @@ const parentSchema = mongoose.Schema(
       required: [true, "Please add the parent phone number"],
     },
     id: {
-        type: Number,
+        type: String,
         required: [true, "Please add the parent ID"],
     },
   },
