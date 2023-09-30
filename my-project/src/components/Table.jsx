@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
@@ -70,8 +71,6 @@ function Table({
                     <label
                       className={`flex cursor-pointer gap-2 md:w-[full] w-full items-center`}
                     >
-                     
-
                       <span
                         className={`text-sm text-center ${
                           nocheckbox && "pl-0"
@@ -92,22 +91,30 @@ function Table({
                   })}
                   <td className="flex items-center justify-center relative">
                     <div className="flex space-x-1 items-center">
-                      {nosofbtn == 2 && (
+                      {nosofbtn == 3 && (
                         <>
-                          <Link
-                            to="/"
-                          >
-                            <button className="px-2 py-1 bg-slate-600 text-white text-sm rounded-md">
+                          <Link to="/" className="">
+                            {/* <button className="px-2 py-1 bg-slate-600 text-white text-sm rounded-md">
                               {title.btn1}{" "}
-                            </button>
+                            </button> */}
+                            <FaEdit size={14} color="lightblue"/>
                           </Link>
 
-                          <Link to="/corporate/dashboard/agents/addfarmers">
-                            <button
+                          <Link to="">
+                            {/* <button
                               className="px-1 py-1 bg-orange-400 text-white text-sm rounded-md"
-                              // onClick={handleView(item?.id)}
+                            
                             >
                               {title.btn2}
+                            </button> */}
+                            <FaTrash size={14} color="red"/>
+                          </Link>
+                          <Link to="">
+                            <button
+                              className="px-1 py-1 bg-blue-400 text-white text-sm rounded-md"
+                              // onClick={handleView(item?.id)}
+                            >
+                              {title.btn3}
                             </button>
                           </Link>
                         </>

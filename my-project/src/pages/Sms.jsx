@@ -3,7 +3,10 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import {FaBookReader} from 'react-icons/fa'
 import "./Sms.css"
+import { Link } from 'react-router-dom';
+import useAuth from '../hook/useAuth';
 function Sms() {
+  const {auth}=useAuth()
   const [activepage, setActivePage] = useState("home");
   const handlePages = (page)=>{
     setActivePage(page)
@@ -17,9 +20,25 @@ function Sms() {
             <div className="lg:text-4xl text-xl text-white font-bold bg-black/40 px-2 py-2 ">
               School Management Portal
             </div>
-            <button className="w-[70%] bg-gray-700 px-2 py-2 rounded-full text-white font-semibold hover:text-orange-300 duration-100 transition all ease-in">
-              Get Started
-            </button>
+            {auth?.useremail ? (
+              <Link
+                to="/admin"
+                className="w-full flex items-center justify-center"
+              >
+                <button className="w-[70%] bg-gray-700 px-2 py-2 rounded-lg  text-white font-semibold hover:text-orange-300 duration-100 transition all ease-in">
+                 Go to Dashboard
+                </button>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="w-full flex items-center justify-center"
+              >
+                <button className="w-[70%] bg-gray-700 px-2 py-2 rounded-lg  text-white font-semibold hover:text-orange-300 duration-100 transition all ease-in">
+                  Get Started
+                </button>
+              </Link>
+            )}
           </div>
         )}
 
