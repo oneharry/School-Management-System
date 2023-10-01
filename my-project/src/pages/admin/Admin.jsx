@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation";
 import Table from "../../components/Table";
 import { FaSearch } from "react-icons/fa";
+import AddStudentModal from "../../components/AddStudentModal";
 const data3 = [
   {
     id: 1,
@@ -56,6 +57,14 @@ function Admin() {
   const handleActive = (item) => {
     setActive(item);
   };
+   const [modal, setModal] = useState(false);
+   const handleClose = () => {
+     setModal(!modal);
+   };
+   const handleModel = ()=>{
+    setModal(!modal)
+    console.log("Hello there")
+   }
   return (
     <>
       <Header />
@@ -64,7 +73,7 @@ function Admin() {
         <div className="w-[80%] bg-orange-200">
           {active === "dashboard" && (
             <section className="w-full h-screen p-4">
-              <h2 className="py-4 text-xl font-semibold">Admin </h2>
+              <h2 className="py-4 text-xl font-semibold">Dashboard </h2>
               <div className="w-full lg:flex items-center lg:space-x-3 space-y-2">
                 <div className="w-full h-[100px] flex flex-col bg-orange-100 items-center justify-center rounded-lg">
                   <h2>1000</h2>
@@ -113,25 +122,30 @@ function Admin() {
                           className="w-full"
                         />
                       </div>
+
+                      {/* Filter */}
                       <div className="w-full flex items-center rounded-2xl bg-white p-2 space-x-2">
                         <select className="w-full outline-none">
                           <option>Class</option>
                           <option>Subject</option>
                         </select>
                       </div>
-                      {/* Filter */}
                     </div>
-                    <button className="px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold">
+
+                    <button
+                      className="px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold"
+                      onClick={handleModel}
+                    >
                       Add Student
                     </button>
                   </div>
                   <Table
-                      data={data3}
-                      headers={headers3}
-                      nocheckbox
-                      nosofbtn={3}
-                      title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
-                    />
+                    data={data3}
+                    headers={headers3}
+                    nocheckbox
+                    nosofbtn={3}
+                    title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
+                  />
                 </div>
                 <div className="bg-white w-[80%]">
                   {/* <Table
@@ -183,7 +197,10 @@ function Admin() {
                       </div>
                       {/* Filter */}
                     </div>
-                    <button className="px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold">
+                    <button
+                      className="px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold"
+                      onClick={handleModel}
+                    >
                       Add
                     </button>
                   </div>
@@ -311,6 +328,11 @@ function Admin() {
           )}
           {active === "result" && <section>Result</section>}
           {active === "fee" && <section>Fees</section>}
+          <AddStudentModal
+            visible={modal}
+            setVisible={setModal}
+            handleClose={handleClose}
+          />
         </div>
       </div>
 

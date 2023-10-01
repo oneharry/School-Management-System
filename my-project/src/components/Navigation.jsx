@@ -61,27 +61,27 @@ function Navigation({handleActive, active}) {
                 active={active}
                 handleActive={handleActive}
               />
-              <NavItem
+              {/* <NavItem
                 Icon={FaUserTie}
                 title="Teachers"
                 item="teacher"
                 active={active}
                 handleActive={handleActive}
-              />
-              <NavItem
+              /> */}
+              {/* <NavItem
                 Icon={FaUsersRectangle}
                 title="Classes"
                 item="class"
                 active={active}
                 handleActive={handleActive}
-              />
-              <NavItem
+              /> */}
+              {/* <NavItem
                 Icon={FaBook}
                 title="Subjects"
                 item="subject"
                 active={active}
                 handleActive={handleActive}
-              />
+              /> */}
               <NavItem
                 Icon={FaSheetPlastic}
                 title="Result"
