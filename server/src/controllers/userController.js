@@ -19,9 +19,8 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already registered!");
   }
 
-  //Hash password
+
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log("Hashed Password: ", hashedPassword);
   const user = await User.create({
     username,
     email,
@@ -41,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
   res.send(error);
  }
 });
+
 
 //@desc Login user
 //@route POST /api/users/login
@@ -86,4 +86,4 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-module.exports = { registerUser, loginUser, currentUser};
+module.exports = { registerUser, loginUser, currentUser };

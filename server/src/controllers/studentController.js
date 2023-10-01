@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Student = require("../models/studentModel");
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const bcrypt = require("bcrypt");
 const errorHandler = require('../middleware/errorHandler');
 
 
@@ -19,10 +20,17 @@ const createStudent = asyncHandler(async (req, res) => {
   console.log("The request body is :", req.body);
 
   try {
-    const { name, email, phone, date, grade, parent, id } = req.body;
-    if (!name || !email || !phone || !date || !grade || !parent || !id ) {
+    const designation = "student";
+    const { name, email, phone, date, grade, parent, id, password } = req.body;
+    if (!name || !email || !phone || !date || !grade || !parent || !id || !password) {
       res.status(400);
       throw new Error("All fields are mandatory !");
+    }
+
+    const userAvailable = await User.findOne({ email });
+    if (userAvailable) {
+      res.status(400);
+      throw new Error("User already registered!");
     }
   
     const student = await Student.create({
@@ -34,7 +42,16 @@ const createStudent = asyncHandler(async (req, res) => {
       grade,
       parent,
     });
-  
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username: name,
+      email,
+      password: hashedPassword,
+      designation
+    });
+
+    console.log(`User created ${user}`);
     res.status(201).json(student);
   } catch (error) {
     console.log(error);

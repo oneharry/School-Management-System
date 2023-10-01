@@ -11,16 +11,16 @@ const { isUserExist } = require('../middleware/canCreateHandler');
 
 router.get('/student/:id', validateToken, readAccess, getStudentProfile);
 router.get('/students', getStudent);
-router.post('/student', validateToken, isUserExist, writeAccess, createStudent);
+router.post('/student', validateToken, writeAccess, createStudent);
 router.put('/student/:id', validateToken, writeAccess, updateStudent);
 router.delete('/student/:id', validateToken, writeAccess, deleteStudent);
 
 router.put('/student/:grade/:id', validateToken, writeAccess, addScore);
 
 router.get('/staff', getStaff);
-router.post('/staff', validateToken, isUserExist, writeAccess, createStaff);
+router.post('/staff', createStaff);
 
 router.get('/parent', getParent);
-router.post('/parent', validateToken, isUserExist, writeAccess, createParent);
+router.post('/parent', validateToken, writeAccess, createParent);
 
 module.exports = router;
