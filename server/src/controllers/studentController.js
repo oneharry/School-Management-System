@@ -82,7 +82,7 @@ const createStudent = asyncHandler(async (req, res) => {
 const getStudentProfile = async (req, res) => {
   const { id } = req.params;
   try {
-    const student = await Student.findOne({ _id });
+    const student = await Student.findOne({ _id: id });
     if (student) {
       res.status(200).json({"data": student});
     } else {
@@ -104,7 +104,7 @@ const updateStudent = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
-    const student = await Student.findOneAndUpdate({ _id }, updatedData, {new: true});
+    const student = await Student.findOneAndUpdate({ _id: id }, updatedData, {new: true});
     if (student) {
       res.status(201).json(student);
     } else {
@@ -126,7 +126,7 @@ const updateStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
   const { id } = req.params;
   try {
-    const student = await Student.findOneAndDelete({ _id });
+    const student = await Student.findOneAndDelete({ _id: id });
     if (student) {
       res.status(200).json(student);
     } else {
@@ -152,7 +152,7 @@ const addScore = async (req, res) => {
   try {
 
     for (const course in result) {
-      const student = await Student.findOneAndUpdate({ _id },
+      const student = await Student.findOneAndUpdate({ _id: id },
         { $set: { [`courses.0.${grade}.${course}`]: result[course] } },
         { new: true }
       );
