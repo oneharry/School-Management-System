@@ -73,6 +73,7 @@ function Admin() {
     try {
       const result = await axiosprivate.delete(`/api/student/${id}`);
       toast.success("student deleted");
+      fetchStudents();
     } catch (error) {
       toast.error("could not fetch data", error);
     }
