@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import useAxiosPrivate from "../hook/useAxios";
-import {toast} from "react-hot-toast"
-const AddStudentForm = () => {
-    const axiosprivate = useAxiosPrivate();
+import { toast } from "react-hot-toast";
+import useAxiosPrivate from "../../hook/useAxios";
+const EditStudent = ({ selectedstudent }) => {
+  const axiosprivate = useAxiosPrivate();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password:"",
-    phone: "",
-    date: "",
-    studentid: "",
-    grade: "",
-    parent: "",
-    courses: [],
+    name: selectedstudent?.name,
+    email: selectedstudent?.email,
+    phone: selectedstudent?.phone,
+    date: selectedstudent?.date,
+    studentid: selectedstudent?.studentid,
+    grade: selectedstudent?.grade,
+    parent: selectedstudent?.parent,
+    courses: [selectedstudent?.courses],
   });
 
   const handleInputChange = (e) => {
@@ -28,47 +27,40 @@ const AddStudentForm = () => {
       e.target.selectedOptions,
       (option) => option.value
     );
-    // Create an object with numbered keys for each selected subject
-    const formattedCourses = {};
-    selectedSubjects.forEach((subject, index) => {
-      formattedCourses[index + 1] = subject;
-    });
     setFormData({
       ...formData,
-      courses: [formattedCourses],
+      courses: selectedSubjects,
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // You can handle form submission here
     console.log(formData);
-   
+
     try {
-     const res = await axiosprivate.post("/api/student", formData)
-     console.log(res.data)
-     toast.success("student created")
-     setFormData({
-       name: "",
-       email: "",
-       password: "",
-       phone: "",
-       date: "",
-       studentid: "",
-       grade: "",
-       parent: "",
-       courses: [],
-     });
+      const res = await axiosprivate.put(`/api/student/${selectedstudent?._id}`, formData);
+      console.log(res.data);
+      toast.success("student updated successfully");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        date: "",
+        studentid: "",
+        grade: "",
+        parent: "",
+        courses: [],
+      });
     } catch (error) {
-       if (
-         error.response &&
-         error.response.status >= 400 &&
-         error.response.status <= 500
-       ) {
-         toast.error(error.response.data.message);
-       }
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        toast.error(error.response.data.message);
+      }
     }
-    
   };
 
   return (
@@ -77,7 +69,7 @@ const AddStudentForm = () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
       >
-        <h2>Create Student</h2>
+        <h2>Edit {selectedstudent?.name} </h2>
         <div className="w-full flex items-center space-x-2">
           <div className="w-1/2 ">
             <label
@@ -114,23 +106,7 @@ const AddStudentForm = () => {
             />
           </div>
         </div>
-        <div className="w-full">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            password
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="*****"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </div>
+
         <div className="w-full flex items-center space-x-2">
           <div className="w-1/2">
             <label
@@ -254,4 +230,4 @@ const AddStudentForm = () => {
   );
 };
 
-export default AddStudentForm;
+export default EditStudent;

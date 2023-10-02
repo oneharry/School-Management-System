@@ -6,20 +6,11 @@ import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 function Table({
-  icon: Icon,
-  otherbtn,
-  lists,
-  link,
-  nosofbtn,
-  title,
-  nocheckbox,
-  handleCheckboxChange,
-  selectedOptions,
-  btnbgcolor,
+  handleEditModal,
+  handleDelete,
+  handleStudentDetails,
   data,
   headers,
-  // handleDetails,
-  // showdetails,
 }) {
   // const [selectedOptions, setSelectedOptions] = useState([]);
   //   Start for Pagination
@@ -31,148 +22,57 @@ function Table({
   const offset = currentPage * Number(PerItem);
   const currentItem = data.slice(offset, offset + Number(PerItem));
   const pageCount = Math.ceil(data.length / Number(PerItem));
-  const headerD = headers.map((header) => {
-    const key = Object.keys(header)[1];
-    console.log(header[key]);
-    return header[key];
-  });
-  const [showdetails, setShowDetails] = useState(
-    Array(lists?.length).fill(false)
-  );
-  const [active, setActive] = useState(null);
-
-  const handleDetails = (index) => {
-    const newShowDetails = [...showdetails];
-    newShowDetails[index] = !newShowDetails[index];
-    setShowDetails(newShowDetails);
-  };
   return (
     <div className="w-full">
       <div className="flex w-full overflow-x-auto">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="table">
+          <thead>
             <tr>
-              {headerD.map((header) => (
-                <th key={header} className="text-sm text-center" scope="col">
+              {headers?.map((header) => (
+                <th key={header} className="font-semibold">
                   {header}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {currentItem.length > 0 ? (
-              currentItem?.map((item, i) => (
-                <tr
-                  key={i}
-                  className="bg-white px-3 py-3 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <td className={`px-2 py-2`}>
-                    {console.log(item)}
-                    <label
-                      className={`flex cursor-pointer gap-2 md:w-[full] w-full items-center`}
-                    >
-                      <span
-                        className={`text-sm text-center ${
-                          nocheckbox && "pl-0"
-                        }`}
-                      >
-                        {!Icon ? i + 1 : " "}
-                      </span>
-                    </label>
-                  </td>
-                  {/* Map over the data keys to dynamically generate table cells */}
-                  {headers.slice(1, -1).map((header, index) => {
-                    const key = Object.keys(header)[1];
+            {currentItem?.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item?.name}</td>
+                <td>{item?.email}</td>
+                <td>{item?.phone}</td>
+                <td>{item?.studentid}</td>
+                <td>{item?.dob}</td>
+                <td>{item?.grade}</td>
+                <td>{item?.parent}</td>
+
+                <td>
+                  {item.courses.map((course, courseIndex) => {
+                    const courseNames = Object.keys(course)
+                      .filter((key) => key !== "_id") // Exclude _id
+                      .map((key) => course[key]);
                     return (
-                      <td key={index} className="text-sm text-center">
-                        {item[key]}
-                      </td>
+                      <div key={courseIndex}>{courseNames.join(", ")}</div>
                     );
                   })}
-                  <td className="flex items-center justify-center relative">
-                    <div className="flex space-x-1 items-center">
-                      {nosofbtn == 3 && (
-                        <>
-                          <Link to="/" className="">
-                            {/* <button className="px-2 py-1 bg-slate-600 text-white text-sm rounded-md">
-                              {title.btn1}{" "}
-                            </button> */}
-                            <FaEdit size={14} color="lightblue"/>
-                          </Link>
-
-                          <Link to="">
-                            {/* <button
-                              className="px-1 py-1 bg-orange-400 text-white text-sm rounded-md"
-                            
-                            >
-                              {title.btn2}
-                            </button> */}
-                            <FaTrash size={14} color="red"/>
-                          </Link>
-                          <Link to="">
-                            <button
-                              className="px-1 py-1 bg-blue-400 text-white text-sm rounded-md"
-                              // onClick={handleView(item?.id)}
-                            >
-                              {title.btn3}
-                            </button>
-                          </Link>
-                        </>
-                      )}
-                      {nosofbtn == 1 && (
-                        <Link to="/">
-                          <button
-                            className={`px-2 py-1 ${
-                              btnbgcolor ? btnbgcolor : "bg-slate-600"
-                            } text-white text-sm rounded-md flex items-center justify-center`}
-                          >
-                            {title}{" "}
-                          </button>
-                        </Link>
-                      )}
-                      {(otherbtn || Icon) && (
-                        <div
-                          className={`px-2 py-1 bg-blue-100
-                             text-gray-500 text-sm rounded-md flex items-center justify-center mt-2 cursor-pointer`}
-                        >
-                          <Icon size={20} onClick={() => handleDetails(i)} />
-                        </div>
-                      )}
-                    </div>
-                    {showdetails[i] && (
-                      <div className="absolute top-6 w-24 z-50">
-                        <div className="rounded-md bg-white border border-gray-500 mb-3 my-3">
-                          {lists.map((list, j) => (
-                            <div
-                              key={list}
-                              className={` px-1 py-1 text-xs flex flex-col items-center justify-center border-b border-gray-100`}
-                            >
-                              {console.log(list)}
-                              <span
-                                className={`${
-                                  list === active ? "bg-orange-200" : "bg-white"
-                                } w-full cursor-pointer`}
-                                onClick={() => setActive(list)}
-                              >
-                                {list}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={headers.length + (nocheckbox ? 0 : 1)}>
-                  No Records
+                </td>
+                <td>
+                  <div className="flex items-center space-x-2">
+                    <FaEdit size={20} onClick={() => handleEditModal(item)} />
+                    <FaTrash
+                      size={20}
+                      onClick={() => handleDelete(item?._id)}
+                    />
+                    <button onClick={() => handleStudentDetails(item)}>View</button>
+                  </div>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
+
+        {/* <!-- table-responsive //end --> */}
       </div>
       <div className="flex flex-col md:flex-row py-4">
         <div className="md:w-6/12 lg:w-6/12 md:mb-0 mb-8">

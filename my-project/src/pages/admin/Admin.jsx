@@ -1,76 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation";
 import Table from "../../components/Table";
 import { FaSearch } from "react-icons/fa";
 import AddStudentModal from "../../components/AddStudentModal";
-const data3 = [
-  {
-    id: 1,
-    name: "Adamu Adama",
-    class: "Pri 3",
-    sex: "Female",
-    classteacher: "Mrs Jane Smith",
-    subjects: ["Math", "English", "inter-science"],
-    //  duedate:"12-12-12"
-  },
-  // Add more data items for section 2
+import useAxiosPrivate from "../../hook/useAxios";
+import { toast } from "react-hot-toast";
+import EditStudentModal from "../../components/EditStudentModal";
+import Studentdetails from "./Studentdetails";
+const thead = [
+  "S/N",
+  "Name",
+  "Email",
+  "Phone",
+  "Studentid",
+  "DOB",
+  "Grade",
+  "Parent",
+  "Courses",
+  "Action",
 ];
 
-const headers3 = [
-  {
-    id: 1,
-    sn: "S/N",
-  },
-  {
-    id: 2,
-    name: "Name",
-  },
-  {
-    id: 3,
-    class: "Class",
-  },
-  ,
-  {
-    id: 4,
-    sex: "Gender",
-  },
-  ,
-  {
-    id: 5,
-    classteacher: "CLASS TEACHER",
-  },
-  ,
-  {
-    id: 6,
-    subjects: "SUBJECTS",
-  },
-  {
-    id: 7,
-    duedate: "",
-  },
-]; // Table headers for section 2
 function Admin() {
+  const axiosprivate = useAxiosPrivate();
+  const [students, setStudents] = useState([]);
+  const fetchStudents = async () => {
+    try {
+      const result = await axiosprivate.get("/api/students");
+      console.log(result?.data?.data);
+      setStudents(result?.data?.data);
+    } catch (error) {
+      toast.error("could not fetch data", error);
+    }
+  };
+  useEffect(() => {
+    fetchStudents();
+  }, [axiosprivate]);
   const [active, setActive] = useState("dashboard");
 
   const handleActive = (item) => {
     setActive(item);
   };
-   const [modal, setModal] = useState(false);
-   const handleClose = () => {
-     setModal(!modal);
-   };
-   const handleModel = ()=>{
-    setModal(!modal)
-    console.log("Hello there")
-   }
+  const [modal, setModal] = useState(false);
+  const [editmodal, setEditModal] = useState(false);
+  const [studentdetailsmodal, setStudentDetailsModal] = useState(false);
+
+  const [selectedstudent, setSelectedStudent] = useState(null);
+  const handleClose = () => {
+    setModal(!modal);
+  };
+  const handleStudentClose = () => {
+    setStudentDetailsModal(!studentdetailsmodal);
+  };
+  const handleModel = () => {
+    setModal(!modal);
+  };
+  const handleStudentDetails = (item) => {
+    console.log(item);
+    setSelectedStudent(item);
+    setStudentDetailsModal(!studentdetailsmodal);
+  };
+  const handleEditModal = (item) => {
+    console.log(item);
+    setSelectedStudent(item);
+    setEditModal(!editmodal);
+  };
+  const handleDelete = async (id) => {
+    console.log(id);
+    const check = confirm(`are you sure you want to delete ${id}`);
+    if (!check) return null;
+    try {
+      const result = await axiosprivate.delete(`/api/student/${id}`);
+      toast.success("student deleted");
+    } catch (error) {
+      toast.error("could not fetch data", error);
+    }
+  };
   return (
     <>
       <Header />
       <div className="flex bg-gray-100">
         <Navigation handleActive={handleActive} active={active} />
-        <div className="w-[80%] bg-orange-200">
+        <div className="w-[80%] bg-orange-200 h-auto">
           {active === "dashboard" && (
             <section className="w-full h-screen p-4">
               <h2 className="py-4 text-xl font-semibold">Dashboard </h2>
@@ -139,13 +151,13 @@ function Admin() {
                       Add Student
                     </button>
                   </div>
-                  <Table
+                  {/* <Table
                     data={data3}
                     headers={headers3}
                     nocheckbox
                     nosofbtn={3}
                     title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
-                  />
+                  /> */}
                 </div>
                 <div className="bg-white w-[80%]">
                   {/* <Table
@@ -204,13 +216,13 @@ function Admin() {
                       Add
                     </button>
                   </div>
-                  <div className="bg-white">
+                  <div className="bg-white w-full h-[70vh] overflow-y-scroll">
                     <Table
-                      data={data3}
-                      headers={headers3}
-                      nocheckbox
-                      nosofbtn={3}
-                      title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
+                      data={students}
+                      headers={thead}
+                      handleEditModal={handleEditModal}
+                      handleDelete={handleDelete}
+                      handleStudentDetails={handleStudentDetails}
                     />
                   </div>
                 </div>
@@ -261,13 +273,13 @@ function Admin() {
                     </button>
                   </div>
                   <div className="bg-white">
-                    <Table
+                    {/* <Table
                       data={data3}
                       headers={headers3}
                       nocheckbox
                       nosofbtn={3}
                       title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -314,13 +326,7 @@ function Admin() {
                     </button>
                   </div>
                   <div className="bg-white">
-                    <Table
-                      data={data3}
-                      headers={headers3}
-                      nocheckbox
-                      nosofbtn={3}
-                      title={{ btn1: "Update", btn2: "Delete", btn3: "View" }}
-                    />
+                    <Table data={data3} headers={thead} />
                   </div>
                 </div>
               </div>
@@ -332,6 +338,18 @@ function Admin() {
             visible={modal}
             setVisible={setModal}
             handleClose={handleClose}
+          />
+          <EditStudentModal
+            visible={editmodal}
+            setVisible={setEditModal}
+            handleClose={handleClose}
+            selectedstudent={selectedstudent}
+          />
+          <Studentdetails
+            visible={studentdetailsmodal}
+            setVisible={setStudentDetailsModal}
+            handleClose={handleStudentClose}
+            selectedstudent={selectedstudent}
           />
         </div>
       </div>
