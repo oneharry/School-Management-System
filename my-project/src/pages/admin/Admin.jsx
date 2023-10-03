@@ -25,6 +25,7 @@ const thead = [
 function Admin() {
   const axiosprivate = useAxiosPrivate();
   const [students, setStudents] = useState([]);
+  const [parent, setParent] = useState([])
   const fetchStudents = async () => {
     try {
       const result = await axiosprivate.get("/api/students");
