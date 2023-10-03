@@ -7,7 +7,7 @@ const studentSchema = mongoose.Schema(
       required: [true, "Please add the student name"],
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, "Please add the student date of birth"],
     },
     email: {
@@ -18,7 +18,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the student phone number"],
     },
-    id: {
+    studentid: {
       type: String,
       required: [true, "Please add the student ID"],
     },

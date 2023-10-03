@@ -8,7 +8,9 @@ function useAxiosPrivate() {
   useEffect(() => {
     const reqIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
-        const accessToken = localStorage.getItem("accessToken");
+        // const accessToken = localStorage.getItem("accessToken");
+        const accessToken = auth?.accessToken
+        console.log(accessToken)
         if (!config.headers["Authorization"] && accessToken) {
           config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
