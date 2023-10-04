@@ -14,9 +14,9 @@ function App() {
       <Route path="/" exact element={<Sms />} />
       <Route path="/login" exact element={<Login />} />
       <Route path="/register" exact element={<Register />} />
-      <Route path="/admin" exact element={<CreateParent />} />
-      <Route path="/parent" exact element={<CreateStaff />} />
-      <Route path="/staff" exact element={<Admin />} />
+      <Route path="/parent" exact element={<CreateParent />} />
+      <Route path="/staff" exact element={<CreateStaff />} />
+      <Route path="/admin" exact element={<Admin />} />
 
       {/* <Route path="/login" exact element={<Login />} /> */}
 
