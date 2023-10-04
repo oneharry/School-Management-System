@@ -5,7 +5,8 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import useAuth from "./hook/useAuth";
 import Missing from "./components/Missing";
-import Parent from "./components/Parent";
+import CreateParent from "./pages/CreateParent";
+import CreateStaff from "./pages/CreateStaff";
 function App() {
   const { auth } = useAuth();
   return (
@@ -13,9 +14,9 @@ function App() {
       <Route path="/" exact element={<Sms />} />
       <Route path="/login" exact element={<Login />} />
       <Route path="/register" exact element={<Register />} />
-      <Route path="/parent" exact element={<Parent />} />
-
-      <Route path="/admin" exact element={<Admin />} />
+      <Route path="/admin" exact element={<CreateParent />} />
+      <Route path="/parent" exact element={<CreateStaff />} />
+      <Route path="/staff" exact element={<Admin />} />
 
       {/* <Route path="/login" exact element={<Login />} /> */}
 
