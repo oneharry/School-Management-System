@@ -21,8 +21,18 @@ const createStudent = asyncHandler(async (req, res) => {
 
   try {
     const designation = "student";
-    const { name, email, phone, date, grade, parent, id, password } = req.body;
-    if (!name || !email || !phone || !date || !grade || !parent || !id || !password) {
+    const { name, email, phone, date, grade, parent, studentid, password,courses } = req.body;
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !date ||
+      !grade ||
+      !parent ||
+      !studentid ||
+      !password ||
+      !courses
+    ) {
       res.status(400);
       throw new Error("All fields are mandatory !");
     }
@@ -38,9 +48,10 @@ const createStudent = asyncHandler(async (req, res) => {
       date,
       email,
       phone,
-      id,
+      studentid,
       grade,
       parent,
+      courses
     });
 
     const hashedPassword = await bcrypt.hash(password, 10);
