@@ -3,7 +3,7 @@ import React from 'react'
 function CreateStaff() {
   return (
     <div className="w-full flex items-center bg-gray-100 flex-col h-screen">
-      <div className="lg:w-1/4 w-full bg-white rounded-lg p-4 flex flex-col mt-10">
+      <div className="lg:w-3/4 w-full bg-white rounded-lg p-4 flex flex-col mt-10">
         <h2 className="login">Staff Portal</h2>
         <form className="w-full">
           <div className="w-full">
@@ -46,21 +46,11 @@ function CreateStaff() {
               // onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="w-full">
-            <label htmlFor="id">ID:</label>
-            <input
-              type="text"
-              id="staff-id"
-              placeholder="staff id"
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
           {/* <a href="#" className="forgot-password">
             Forgot Password?
           </a> */}
           <button type="submit" className="bg-orange-300 w-full">
-            Sign In
+           Create Staff
           </button>
         </form>
         {/* <p>

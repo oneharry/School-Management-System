@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
-function Table({
+function ParentsTable({
   handleEditModal,
   handleDelete,
   handleStudentDetails,
@@ -20,8 +20,8 @@ function Table({
     setCurrentPage(selectedPage);
   };
   const offset = currentPage * Number(PerItem);
-  const currentItem = data.slice(offset, offset + Number(PerItem));
-  const pageCount = Math.ceil(data.length / Number(PerItem));
+  const currentItem = data?.slice(offset, offset + Number(PerItem));
+  const pageCount = Math.ceil(data?.length / Number(PerItem));
   return (
     <div className="w-full">
       <div className="flex w-full overflow-x-auto">
@@ -42,22 +42,9 @@ function Table({
                 <td>{item?.name}</td>
                 <td>{item?.email}</td>
                 <td>{item?.phone}</td>
-                <td>{item?.studentid}</td>
-                <td>{item?.dob}</td>
-                <td>{item?.grade}</td>
-                <td>{item?.parent}</td>
+                <td>{item?.parentid}</td>
 
-                <td>
-                  {item?.courses?.map((course, courseIndex) => {
-                    const courseNames = Object.keys(course)
-                      .filter((key) => key !== "_id") // Exclude _id
-                      .map((key) => course[key]);
-                    return (
-                      <div key={courseIndex}>{courseNames.join(", ")}</div>
-                    );
-                  })}
-                </td>
-                <td>
+                {/* <td>
                   <div className="flex items-center space-x-2">
                     <FaEdit size={20} onClick={() => handleEditModal(item)} />
                     <FaTrash
@@ -66,7 +53,7 @@ function Table({
                     />
                     <button onClick={() => handleStudentDetails(item)}>View</button>
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
@@ -127,4 +114,4 @@ function Table({
   );
 }
 
-export default Table;
+export default ParentsTable;
