@@ -89,7 +89,6 @@ function Navigation({handleActive, active}) {
                 active={active}
                 handleActive={handleActive}
               />
-             
             </>
           )}
           {auth?.designation == "admin" && (
@@ -117,8 +116,15 @@ function Navigation({handleActive, active}) {
               />
               <NavItem
                 Icon={FaUsersRectangle}
-                title="Classes"
-                item="class"
+                title="Parent"
+                item="parent"
+                active={active}
+                handleActive={handleActive}
+              />
+              <NavItem
+                Icon={FaUsersRectangle}
+                title="Staff"
+                item="staffs"
                 active={active}
                 handleActive={handleActive}
               />

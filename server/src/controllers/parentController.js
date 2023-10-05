@@ -22,9 +22,9 @@ const createParent = async (req, res) => {
   console.log("The request body is :", req.body);
 
   const designation = "parent";
-  const { name, email, phone } = req.body;
+  const { name, email, phone, parentid } = req.body;
   try {
-    if (!name || !email || !phone) {
+    if (!name || !email || !phone || !parentid) {
       res.status(400);
       throw new Error("All fields are mandatory !");
     }
@@ -39,7 +39,7 @@ const createParent = async (req, res) => {
       name,
       email,
       phone,
-      id,
+      parentid,
     });
 
     const hashedPassword = await bcrypt.hash(password, 10);
