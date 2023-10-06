@@ -13,6 +13,7 @@ import ParentsTable from "../../components/ParentsTable";
 import AddParentModal from "../../components/AddParentModal";
 import AddStaffModal from "../../components/AddStaffModal";
 import StaffsTable from "../../components/StaffsTable";
+import StudentScores from "./StudentScores";
 const thead = [
   "S/N",
   "Name",
@@ -75,6 +76,7 @@ function Admin() {
   const [staffmodal, setStaffModal] = useState(false);
 
   const [studentdetailsmodal, setStudentDetailsModal] = useState(false);
+  const [studentscoresmodal, setStudentScoreModal] = useState(false);
 
   const [selectedstudent, setSelectedStudent] = useState(null);
   const [selectedparent, setSelectedParent] = useState(null);
@@ -84,6 +86,9 @@ function Admin() {
   const handleStaffClose = () => {
     setStaffModal(!staffmodal);
   };
+  const handleScoreClose = ()=>{
+    setStudentScoreModal(!studentscoresmodal)
+  }
   const handleParentClose = () => {
     setParentModal(!parentmodal);
   };
@@ -105,6 +110,11 @@ setParentModal(!parentmodal);
     console.log(item);
     setSelectedStudent(item);
     setStudentDetailsModal(!studentdetailsmodal);
+  };
+  const handleStudentScore = (item) => {
+    console.log(item);
+    setSelectedStudent(item);
+    setStudentScoreModal(!studentscoresmodal);
   };
   const handleEditModal = (item) => {
     console.log(item);
@@ -254,6 +264,7 @@ setParentModal(!parentmodal);
                       handleEditModal={handleEditModal}
                       handleDelete={handleDelete}
                       handleStudentDetails={handleStudentDetails}
+                      handleStudentScore={handleStudentScore}
                     />
                   </div>
                 </div>
@@ -422,6 +433,12 @@ setParentModal(!parentmodal);
             visible={studentdetailsmodal}
             setVisible={setStudentDetailsModal}
             handleClose={handleStudentClose}
+            selectedstudent={selectedstudent}
+          />
+          <StudentScores
+            visible={studentscoresmodal}
+            setVisible={setStudentScoreModal}
+            handleClose={handleScoreClose}
             selectedstudent={selectedstudent}
           />
         </div>
