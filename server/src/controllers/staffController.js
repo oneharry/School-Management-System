@@ -19,10 +19,10 @@ const getStaff = async (req, res) => {
  */
 const createStaff = async (req, res) => {
   console.log("The request body is :", req.body);
-  const { name, email, phone, id, specialty, password } = req.body;
+  const { name, email, phone, staffid, specialty, password } = req.body;
   const designation = "admin";
   try {
-    if (!name || !email || !phone || !specialty || !id || !password) {
+    if (!name || !email || !phone || !specialty || !staffid || !password) {
       res.status(400);
       throw new Error("All fields are mandatory !");
     }
@@ -38,7 +38,7 @@ const createStaff = async (req, res) => {
       email,
       phone,
       specialty,
-      id,
+      staffid,
     });
 
     const hashedPassword = await bcrypt.hash(password, 10);

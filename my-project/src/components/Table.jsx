@@ -9,6 +9,7 @@ function Table({
   handleEditModal,
   handleDelete,
   handleStudentDetails,
+  handleStudentScore,
   data,
   headers,
 }) {
@@ -64,7 +65,12 @@ function Table({
                       size={20}
                       onClick={() => handleDelete(item?._id)}
                     />
-                    <button onClick={() => handleStudentDetails(item)}>View</button>
+                    <button onClick={() => handleStudentDetails(item)}>
+                      View
+                    </button>
+                    <button onClick={() => handleStudentScore(item?._id)}>
+                      Add score
+                    </button>
                   </div>
                 </td>
               </tr>
