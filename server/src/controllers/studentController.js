@@ -125,7 +125,10 @@ const deleteStudent = async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findOneAndDelete({ _id: id });
+    const email = student.email;
+    const user = await User.findOneAndDelete({ email });
     if (student) {
+      console.log(`${email} deleted from user`);
       res.status(200).json(student);
     } else {
       res.status(404);
