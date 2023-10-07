@@ -68,7 +68,7 @@ function Table({
                     <button onClick={() => handleStudentDetails(item)}>
                       View
                     </button>
-                    <button onClick={() => handleStudentScore(item?._id)}>
+                    <button onClick={() => handleStudentScore(item)}>
                       Add score
                     </button>
                   </div>

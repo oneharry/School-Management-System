@@ -128,7 +128,7 @@ function Navigation({handleActive, active}) {
                 active={active}
                 handleActive={handleActive}
               />
-              <NavItem
+              {/* <NavItem
                 Icon={FaBook}
                 title="Subjects"
                 item="subject"
@@ -148,7 +148,7 @@ function Navigation({handleActive, active}) {
                 item="fee"
                 active={active}
                 handleActive={handleActive}
-              />
+              /> */}
             </>
           )}
         </div>
