@@ -146,13 +146,13 @@ const deleteStudent = async (req, res) => {
  * @return student object as response object
  */
 const addScore = async (req, res) => {
-  const { id, grade } = req.params;
+  const { studentid, grade } = req.params;
   const result = req.body;
 
   try {
 
     for (const course in result) {
-      const student = await Student.findOneAndUpdate({ _id: id },
+      const student = await Student.findOneAndUpdate({ studentid },
         { $set: { [`courses.0.${grade}.${course}`]: result[course] } },
         { new: true }
       );
