@@ -21,7 +21,7 @@ const createStudent = asyncHandler(async (req, res) => {
 
   try {
     const designation = "student";
-    const { name, email, phone, date, grade, parent, studentid, password,courses } = req.body;
+    const { name, email, phone, date, grade, parent, studentid, password } = req.body;
     if (
       !name ||
       !email ||
@@ -30,8 +30,7 @@ const createStudent = asyncHandler(async (req, res) => {
       !grade ||
       !parent ||
       !studentid ||
-      !password ||
-      !courses
+      !password
     ) {
       res.status(400);
       throw new Error("All fields are mandatory !");
@@ -50,8 +49,7 @@ const createStudent = asyncHandler(async (req, res) => {
       phone,
       studentid,
       grade,
-      parent,
-      courses
+      parent
     });
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -150,7 +148,6 @@ const addScore = async (req, res) => {
   const result = req.body;
 
   try {
-
     for (const course in result) {
       const student = await Student.findOneAndUpdate({ studentid },
         { $set: { [`courses.0.${grade}.${course}`]: result[course] } },
