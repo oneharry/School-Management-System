@@ -58,6 +58,32 @@ const createStaff = async (req, res) => {
 };
 
 
+/**
+ * @desc Make a staff an admin
+ * @route PUT /api/admin
+ * @return array of staff as response object
+ */
+const changeDesignation = async (req, res) => {
+  console.log("The request body is :", req.body);
+  const { email, designation } = req.body;
+  const updatedData = { designation }
+  try {
+    const staff = await User.findOneAndUpdate({ email }, updatedData, {new: true});
+    
+    if (staff) {
+      res.status(201).json(staff);
+    } else {
+      res.status(404);
+      throw new Error(`teacher with email ${email} not found`);
+
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error.message);
+  }
+};
+
+
 module.exports = {
     getStaff,
     createStaff,
