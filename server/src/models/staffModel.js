@@ -18,7 +18,7 @@ const staffSchema = mongoose.Schema(
         type: String,
         required: [true, "Please add the staff specialty"],
     },
-    id: {
+    staffid: {
         type: String,
         required: [true, "Please add the staff ID"],
     },
