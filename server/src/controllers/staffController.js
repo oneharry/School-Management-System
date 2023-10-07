@@ -20,7 +20,7 @@ const getStaff = async (req, res) => {
 const createStaff = async (req, res) => {
   console.log("The request body is :", req.body);
   const { name, email, phone, staffid, specialty, password } = req.body;
-  const designation = "admin";
+  const designation = "teacher";
   try {
     if (!name || !email || !phone || !specialty || !staffid || !password) {
       res.status(400);
