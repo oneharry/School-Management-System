@@ -33,14 +33,15 @@ const theadstaff = ["S/N", "Name", "Email", "Phone", " Specialty", "Action"];
 function Admin() {
   const axiosprivate = useAxiosPrivate();
   const { auth } = useAuth();
-  const ID = auth?.id
+  console.log(auth?.id)
+  const id = auth?.id
   const [students, setStudents] = useState([]);
   const [studentdetails, setStudentdetails] = useState({})
   const [parent, setParent] = useState([])
   const [staff, setStaff] = useState([]);
   const fetchStudentsdetails = async () => {
     try {
-      const result = await axiosprivate.get(`/api/student/${ID}`);
+      const result = await axiosprivate.get(`/api/student/${id}`);
       console.log(result?.data?.data);
       setStudentdetails(result?.data?.data);
     } catch (error) {
