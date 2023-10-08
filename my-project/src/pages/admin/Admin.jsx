@@ -14,6 +14,8 @@ import AddParentModal from "../../components/AddParentModal";
 import AddStaffModal from "../../components/AddStaffModal";
 import StaffsTable from "../../components/StaffsTable";
 import StudentScores from "./StudentScores";
+import useAuth from "../../hook/useAuth";
+// import useAuth from "../hook/useAuth";
 const thead = [
   "S/N",
   "Name",
@@ -30,9 +32,21 @@ const theadparent = ["S/N", "Name", "Email", "Phone", "ParentId"];
 const theadstaff = ["S/N", "Name", "Email", "Phone", " Specialty", "Action"];
 function Admin() {
   const axiosprivate = useAxiosPrivate();
+  const { auth } = useAuth();
+  const ID = auth?.id
   const [students, setStudents] = useState([]);
+  const [studentdetails, setStudentdetails] = useState({})
   const [parent, setParent] = useState([])
   const [staff, setStaff] = useState([]);
+  const fetchStudentsdetails = async () => {
+    try {
+      const result = await axiosprivate.get(`/api/student/${ID}`);
+      console.log(result?.data?.data);
+      setStudentdetails(result?.data?.data);
+    } catch (error) {
+      toast.error("could not fetch data", error);
+    }
+  };
   const fetchStudents = async () => {
     try {
       const result = await axiosprivate.get("/api/students");
@@ -63,7 +77,8 @@ function Admin() {
   useEffect(() => {
     fetchStudents();
     fetchParents();
-    fetchStaffs()
+    fetchStaffs();
+    fetchStudentsdetails();
   }, [axiosprivate]);
   const [active, setActive] = useState("dashboard");
 
@@ -163,49 +178,30 @@ setParentModal(!parentmodal);
             <section className="w-full h-auto">
               <div className="w-full p-4">
                 <h2 className="my-4">Students</h2>
-
-                <div className="w-full lg:flex items-center lg:space-x-3 space-y-2">
-                  <div className="w-full h-[100px] flex flex-col bg-orange-100 items-center justify-center rounded-lg">
-                    <h2>1000</h2>
-                    <span>Total students</span>
-                  </div>
-                  <div className="w-full h-[100px] flex flex-col bg-blue-100 items-center justify-center rounded-lg">
-                    <h2>10</h2>
-                    <span>Total Teachers</span>
-                  </div>
-                  <div className="w-full h-[100px] flex flex-col bg-green-100 items-center justify-center rounded-lg">
-                    <h2>10</h2>
-                    <span>No of Classes</span>
-                  </div>
-                  {/* cards */}
-                </div>
                 <div className="w-full mt-10">
-                  <div className="w-full mb-5 lg:flex items-center justify-between space-y-1">
-                    <div className=" lg:w-2/4 lg:flex items-center lg:space-x-3 space-y-1">
-                      {/* search */}
-                      <div className="w-full flex items-center rounded-2xl bg-white p-2 space-x-2">
-                        <FaSearch size={20} color="gray" />
-                        <input
-                          placeholder="search students"
-                          className="w-full"
-                        />
+                  <div className="max-w-3xl mx-auto mb-5 flex flex-col space-y-3">
+                    <div className="w-full flex flex-col bg-white rounded-lg p-4">
+                      <div className="font-bold text-2xl">Ajaigbe Paul</div>
+                      <span>pdave4krist</span>
+                      <span>08037187898</span>
+                      <span>Grade 3</span>
+                      {console.log(studentdetails)}
+                    </div>
+                    <div className="w-full text-xl font-semibold">Score</div>
+                    <div className="w-full flex items-center space-x-2 bg-white p-2">
+                      <div className="flex flex-col border-r p-2">
+                        <div>Maths</div>
+                        <div>80</div>
                       </div>
-
-                      {/* Filter */}
-                      <div className="w-full flex items-center rounded-2xl bg-white p-2 space-x-2">
-                        <select className="w-full outline-none">
-                          <option>Class</option>
-                          <option>Subject</option>
-                        </select>
+                      <div className="flex flex-col border-r p-2">
+                        <div>English</div>
+                        <div>80</div>
+                      </div>
+                      <div className="flex flex-col border-r p-2">
+                        <div>Chemistry</div>
+                        <div>80</div>
                       </div>
                     </div>
-
-                    <button
-                      className="px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold"
-                      onClick={handleModel}
-                    >
-                      Add Student
-                    </button>
                   </div>
                   {/* <Table
                     data={data3}
@@ -278,7 +274,6 @@ setParentModal(!parentmodal);
 
                 <div className="w-full mt-10">
                   <div className="w-full mb-5 flex items-center justify-between">
-                    
                     <button
                       className="w-[200px] px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold"
                       onClick={handleParentM}
@@ -306,7 +301,6 @@ setParentModal(!parentmodal);
 
                 <div className="w-full mt-10">
                   <div className="w-full mb-5 flex items-center justify-between">
-                    
                     <button
                       className="w-[200px] px-2 py-2 bg-blue-300 rounded-2xl text-xs text-white font-semibold"
                       onClick={handleStaffM}
@@ -327,7 +321,7 @@ setParentModal(!parentmodal);
               </div>
             </section>
           )}
-          
+
           <AddStudentModal
             visible={modal}
             setVisible={setModal}
