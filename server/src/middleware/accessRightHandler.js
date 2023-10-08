@@ -46,7 +46,7 @@ const readAccess = async (req, res, next) => {
         parentChild = await Student.findOne({ parent: parent.name, id });
     }
 
-    if (staff || (student && (id == user._id)) || parentChild) {
+    if (staff || student || parentChild) {
         next();
     } else {
         res.status(401).json({"msg": "You don't have read access to this resources"});
