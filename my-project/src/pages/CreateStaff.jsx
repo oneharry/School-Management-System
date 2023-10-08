@@ -6,6 +6,7 @@ function CreateStaff() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
      const [specialty, setSpecialty] = useState("");
     const [staffid, setStaffid] = useState("");
 
@@ -16,6 +17,7 @@ function CreateStaff() {
           name,
           phone,
           email,
+          password,
           specialty,
           staffid,
         });
@@ -23,6 +25,7 @@ function CreateStaff() {
         setName("");
         setPhone("");
         setEmail("");
+        setPassword("");
         setSpecialty("");
         setStaffid("");
         console.log(res.data);
@@ -63,6 +66,16 @@ function CreateStaff() {
               placeholder="Staff Phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="w-full">
+            <label htmlFor="phone">Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="w-full">

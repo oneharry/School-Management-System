@@ -12,7 +12,7 @@ const AddStudentForm = () => {
     studentid: "",
     grade: "",
     parent: "",
-    courses: [],
+    // courses: [],
   });
 
   const handleInputChange = (e) => {
@@ -23,21 +23,21 @@ const AddStudentForm = () => {
     });
   };
 
-  const handleSubjectsChange = (e) => {
-    const selectedSubjects = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    // Create an object with numbered keys for each selected subject
-    const formattedCourses = {};
-    selectedSubjects.forEach((subject, index) => {
-      formattedCourses[index + 1] = subject;
-    });
-    setFormData({
-      ...formData,
-      courses: [formattedCourses],
-    });
-  };
+  // const handleSubjectsChange = (e) => {
+  //   const selectedSubjects = Array.from(
+  //     e.target.selectedOptions,
+  //     (option) => option.value
+  //   );
+    
+  //   const formattedCourses = {};
+  //   selectedSubjects.forEach((subject, index) => {
+  //     formattedCourses[index + 1] = subject;
+  //   });
+  //   setFormData({
+  //     ...formData,
+  //     courses: [formattedCourses],
+  //   });
+  // };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const AddStudentForm = () => {
        studentid: "",
        grade: "",
        parent: "",
-       courses: [],
+      //  courses: [],
      });
     } catch (error) {
        if (
@@ -221,7 +221,7 @@ const AddStudentForm = () => {
           />
         </div>
         {/* Repeat this structure for other input fields */}
-        <div className="w-full mb-1">
+        {/* <div className="w-full mb-1">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="subjects"
@@ -238,9 +238,9 @@ const AddStudentForm = () => {
             <option value="math">Math</option>
             <option value="science">Science</option>
             <option value="history">History</option>
-            {/* Add more subjects as needed */}
+           
           </select>
-        </div>
+        </div> */}
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

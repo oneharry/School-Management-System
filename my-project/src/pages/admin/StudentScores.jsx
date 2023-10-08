@@ -5,8 +5,8 @@ import { MdCancel } from "react-icons/md";
 import { useRef } from "react";
 import { useEffect } from "react";
 import SubjectScoreForm from "../../components/SubjectScoreForm";
-function StudentScores({ visible, setVisible, handleClose }) {
-    
+function StudentScores({ visible, setVisible, handleClose, selectedstudent}) {
+
   const [show, setShow] = useState(false);
   const dropdownRef = useRef(null);
   // Add a click event listener to the document body to close the dropdown when clicking outside
@@ -58,7 +58,7 @@ function StudentScores({ visible, setVisible, handleClose }) {
             ref={dropdownRef}
           >
             <div className="w-full px-4 flex flex-col h-screen">
-              <SubjectScoreForm />
+              <SubjectScoreForm selectedstudent={selectedstudent}/>
             </div>
           </div>
         </div>

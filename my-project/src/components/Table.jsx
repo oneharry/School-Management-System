@@ -49,14 +49,16 @@ function Table({
                 <td>{item?.parent}</td>
 
                 <td>
-                  {item?.courses?.map((course, courseIndex) => {
+                  {/* {item?.courses?.map((course, courseIndex) => {
                     const courseNames = Object.keys(course)
                       .filter((key) => key !== "_id") // Exclude _id
                       .map((key) => course[key]);
                     return (
                       <div key={courseIndex}>{courseNames.join(", ")}</div>
                     );
-                  })}
+                  })} */}
+                 { item?.courses.map((course, index) => (
+          <div key={index}>{course.subject}</div>))}
                 </td>
                 <td>
                   <div className="flex items-center space-x-2">
@@ -68,7 +70,7 @@ function Table({
                     <button onClick={() => handleStudentDetails(item)}>
                       View
                     </button>
-                    <button onClick={() => handleStudentScore(item?._id)}>
+                    <button onClick={() => handleStudentScore(item)}>
                       Add score
                     </button>
                   </div>
