@@ -125,7 +125,10 @@ const deleteStudent = async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findOneAndDelete({ _id: id });
+    const email = student.email;
+    const user = await User.findOneAndDelete({ email });
     if (student) {
+      console.log(`${email} deleted from user`);
       res.status(200).json(student);
     } else {
       res.status(404);
@@ -144,25 +147,35 @@ const deleteStudent = async (req, res) => {
  * @return student object as response object
  */
 const addScore = async (req, res) => {
-  const { studentid, grade } = req.params;
+  const { id, grade } = req.params;
   const result = req.body;
+  console.log("result", req.params)
 
   try {
+    const updateObject = {
+      $set: {},
+    };
+
     for (const course in result) {
-      const student = await Student.findOneAndUpdate({ studentid },
-        { $set: { [`courses.0.${grade}.${course}`]: result[course] } },
-        { new: true }
-      );
-      if (!student) {
-        res.status(404);
-        throw new Error(`student with id ${id} not found`);
-      }
+      const courseResult = result[course];
+      updateObject.$set[`courses.0.${grade}.${course}`] = courseResult;
     }
-    res.status(201).json(student);
+
+    const updatedStudent = await Student.findOneAndUpdate({ studentid: id },
+      updateObject,
+      { new: true }
+    );
+
+    if (!updateStudent) {
+      throw new Error(`student with id ${id} is not found`)
+    }
+    res.status(201).json(updatedStudent);
   } catch (error) {
     return res.json(error);
   }
 }
+
+
 
 module.exports = {
     getStudent,
