@@ -19,7 +19,6 @@ setFormData({ subject: "", score: "" });
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(subjectScores)
-    
   };
 
   return (

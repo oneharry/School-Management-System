@@ -9,7 +9,7 @@ const { isUserExist } = require('../middleware/canCreateHandler');
 
 
 
-router.get('/student/:id', validateToken, readAccess, getStudentProfile);
+router.get('/student/:studentid', validateToken, readAccess, getStudentProfile);
 router.get('/students', getStudent);
 router.post('/student', validateToken, writeAccess, createStudent);
 router.put('/student/:id', validateToken, writeAccess, updateStudent);

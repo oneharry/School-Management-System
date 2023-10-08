@@ -32,7 +32,7 @@ const writeAccess = async (req, res, next) => {
  */
 const readAccess = async (req, res, next) => {
     const { email } = req.user;
-    const { id } = req.params;
+    const { studentid } = req.params;
 
     const staff = await Staff.findOne({ email });
     const student = await Student.findOne({ email });
@@ -44,7 +44,7 @@ const readAccess = async (req, res, next) => {
         parentChild = await Student.findOne({ parent: parent.name, id });
     }
 
-    if (staff || (student && (id == student.id)) || parentChild) {
+    if (staff || (student && (studentid == student.studentid)) || parentChild) {
         next();
     } else {
         res.status(401).json({"msg": "You don't have read access to this resources"});
