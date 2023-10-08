@@ -47,17 +47,30 @@ function Table({
                 <td>{item?.dob}</td>
                 <td>{item?.grade}</td>
                 <td>{item?.parent}</td>
-
                 <td>
-                  {item?.courses?.map((course, courseIndex) => {
+                  {item.courses && typeof item.courses[0] === "object" ? (
+                    Object.entries(item.courses[0]).map(
+                      ([subject, score], subjectIndex) => (
+                        <div key={subjectIndex}>
+                          Subject: {subject}, Score: {score}
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <div>No courses available</div>
+                  )}
+                </td>
+                
+
+                {/* {item?.courses?.map((course, courseIndex) => {
                     const courseNames = Object.keys(course)
                       .filter((key) => key !== "_id") // Exclude _id
                       .map((key) => course[key]);
                     return (
                       <div key={courseIndex}>{courseNames.join(", ")}</div>
                     );
-                  })}
-                </td>
+                  })} */}
+
                 <td>
                   <div className="flex items-center space-x-2">
                     <FaEdit size={20} onClick={() => handleEditModal(item)} />

@@ -3,7 +3,7 @@ import useAxiosPrivate from "../hook/useAxios";
 import toast from "react-hot-toast";
 function SubjectScoreForm({ selectedstudent }) {
   console.log(selectedstudent);
-  const id = selectedstudent?.studentid;
+  const id = selectedstudent?.student;
   const grade = selectedstudent?.grade;
   console.log(id, grade);
   const axiosprivate = useAxiosPrivate();
