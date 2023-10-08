@@ -1,5 +1,6 @@
 const Student = require('../models/studentModel');
 const Staff = require('../models/staffModel');
+const User = require('../models/userModel');
 const Parent = require('../models/parentModel');
 const { currentUser } = require('../controllers/userController');
 
@@ -36,6 +37,7 @@ const readAccess = async (req, res, next) => {
 
     const staff = await Staff.findOne({ email });
     const student = await Student.findOne({ email });
+    const user = await User.findOne({ email });
     const parent = await Parent.findOne({ email });
 
     let parentChild;
@@ -44,7 +46,7 @@ const readAccess = async (req, res, next) => {
         parentChild = await Student.findOne({ parent: parent.name, id });
     }
 
-    if (staff || (student && (id == student.id)) || parentChild) {
+    if (staff || (student && (id == user._id)) || parentChild) {
         next();
     } else {
         res.status(401).json({"msg": "You don't have read access to this resources"});
