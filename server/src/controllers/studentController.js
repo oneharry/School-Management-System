@@ -79,13 +79,15 @@ const createStudent = asyncHandler(async (req, res) => {
 
 const getStudentProfile = async (req, res) => {
   const { id } = req.params;
+  console.log(req.params)
   try {
-    const student = await Student.findOne({ _id: id });
+    const user = await User.findOne({ _id: id});
+    const student = await Student.findOne({ email: user.email });
     if (student) {
       res.status(200).json({"data": student});
     } else {
       res.status(404);
-      throw new Error(`student with id ${id} not found`);
+      throw new Error(`student with email ${user.email} not found`);
     }
   } catch (error) {
     console.log(error);
