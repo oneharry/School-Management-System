@@ -182,14 +182,23 @@ setParentModal(!parentmodal);
                 <div className="w-full mt-10">
                   <div className="max-w-3xl mx-auto mb-5 flex flex-col space-y-3">
                     <div className="w-full flex flex-col bg-white rounded-lg p-4">
-                      <div className="font-bold text-2xl">Ajaigbe Paul</div>
-                      <span>pdave4krist</span>
-                      <span>08037187898</span>
-                      <span>Grade 3</span>
+                      <div className="font-bold text-2xl">
+                        {studentdetails?.name}
+                      </div>
+                      <span>{studentdetails?.email}</span>
+                      <span>{studentdetails?.phone}</span>
+                      <span>{studentdetails?.grade}</span>
+                      <span>{studentdetails?.parent}</span>
                       {console.log(studentdetails)}
                     </div>
                     <div className="w-full text-xl font-semibold">Score</div>
                     <div className="w-full flex items-center space-x-2 bg-white p-2">
+                      {studentdetails?.courses?.map((course, index) => (
+                        <div className="flex flex-col border-r p-2" key={index}>
+                          <div>{course?.subject}</div>
+                          <div>{course?.score}</div>
+                        </div>
+                      ))}
                       <div className="flex flex-col border-r p-2">
                         <div>Maths</div>
                         <div>80</div>
