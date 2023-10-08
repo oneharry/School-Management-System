@@ -152,14 +152,14 @@ const addScore = async (req, res) => {
   console.log("result", req.params)
 
   try {
+
+
     const updateObject = {
       $set: {},
     };
+  
+    updateObject.$set[`courses`] = req.body;
 
-    for (const course in result) {
-      const courseResult = result[course];
-      updateObject.$set[`courses.0.${grade}.${course}`] = courseResult;
-    }
 
     const updatedStudent = await Student.findOneAndUpdate({ studentid: id },
       updateObject,

@@ -30,14 +30,7 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the student's parent name"],
     },
-    courses: [{
-      "1": { },
-      "2": { },
-      "3": { },
-      "4": { },
-      "5": { },
-      "6": { }
-    }]
+    courses: []
   },
   {
     timestamps: true,
