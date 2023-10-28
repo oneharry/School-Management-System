@@ -14,7 +14,7 @@ function Header({ handlePages, activepage }) {
     <div className="w-full lg:h-[10vh] h-[20vh] mb-5 lg:mb-0">
       <div className="lg:w-3/5 w-full mx-auto lg:flex items-center lg:justify-between justify-center py-2 ">
         <Link to="/">
-          <div className="text-center">LOGO</div>
+          <div className="text-center">School Management Portal</div>
         </Link>
         <div className="flex items-center space-x-5 justify-center">
           <div
