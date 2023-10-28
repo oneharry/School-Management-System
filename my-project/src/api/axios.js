@@ -1,6 +1,6 @@
 import axios from "axios"
 // const BASEURL = process.env.REACT_APP_LOCAL_URL;
-const URL ="http://localhost:5000"
+const URL ="https://school-management-system-bo9v-oneharry.vercel.app"
 export default axios.create({
   baseURL: URL,
 });
